@@ -1,5 +1,5 @@
 
-## Intalação do projeto
+## Instalação do projeto
 
 - O projeto foi criado em um sistema operacional linux.
 - Confirme se as portas configuradas nos arquivos .env e docker-compose.yaml não estão sendo utilizadas em sua maquina. 
