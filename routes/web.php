@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\FileController;
+use App\Http\Controllers\DebtController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,5 +35,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         return Inertia::render('ImportFile');
     })->name('import');
 
-    Route::post('/upload', [FileController::class, 'upload']);
+    Route::post('/upload', [DebtController::class, 'upload']);
 });
