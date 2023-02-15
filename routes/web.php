@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,16 +25,15 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
+    
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::post('/ticket', function () {
-        return Inertia::render('Ticket');
-    })->name('ticket');
+    Route::get('/import', function () {
+        return Inertia::render('ImportFile');
+    })->name('import');
+
+    Route::post('/upload', [FileController::class, 'upload']);
 });

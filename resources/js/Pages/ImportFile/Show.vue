@@ -1,7 +1,5 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const form = useForm({
@@ -27,7 +25,8 @@ function submit() {
 
             <form @submit.prevent="submit">
                 <div class="mt-10">
-                    <input
+                    <input 
+                        enctype="multipart/form-data"
                         type="file"
                         ref="file"
                         @input="form.file = $event.target.files[0]"

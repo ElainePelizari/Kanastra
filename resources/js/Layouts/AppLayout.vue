@@ -52,7 +52,7 @@ const logout = () => {
                                     Dashboard
                                 </NavLink>
 
-                                <NavLink :href="route('ticket')">
+                                <NavLink :href="route('import')">
                                     Importar Arquivo
                                 </NavLink>
                             </div>

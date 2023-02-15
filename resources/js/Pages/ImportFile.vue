@@ -1,13 +1,13 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Show from '@/Pages/Tickets/Show.vue';
+import Show from '@/Pages/ImportFile/Show.vue';
 </script>
 
 <template>
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Importação arquivo CSV
+                Importar arquivo
             </h2>
         </template>
 
