@@ -11,3 +11,4 @@ yarn-error.log
 /docker/database
 /docker/redis
 vendor
+.env
