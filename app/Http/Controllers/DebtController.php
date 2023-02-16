@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Debt;
 use Inertia\Inertia;
+use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 
 class DebtController extends Controller
 {
-    public function show() 
+    public function show() : Response
     {
         $debtsResponses = Debt::get();
 
@@ -21,15 +23,23 @@ class DebtController extends Controller
         ]);
     }
 
-    public function upload(Request $request) : void
+    public function upload(Request $request) : RedirectResponse
     {
         $extension = '.'.$request->file->getClientOriginalExtension();
+
+        if ($extension !== '.csv') {
+            return redirect()->back()->withErrors([
+                'create' => 'Arquivo não é do tipo csv, importação não foi realizada!',
+            ]);
+        }
         
         $typeFile = $request->file . $extension;
 
         $file = $request->file->storeAs('imports', $typeFile);
 
         $this->create($file);
+
+        return Redirect::route('import');
     }
 
     public function create($file) : void
@@ -66,5 +76,10 @@ class DebtController extends Controller
         } catch (\Throwable $ex) {
             DB::rollback();
         }
+    }
+
+    public function generateTickets() : void
+    {
+
     }
 }
