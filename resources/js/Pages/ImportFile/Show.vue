@@ -2,14 +2,22 @@
 import { useForm } from '@inertiajs/vue3'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ActionMessage from '@/Components/ActionMessage.vue';
+import InputError from '@/Components/InputError.vue';
 
 const form = useForm({
     file: null,
 })
 
 const uploadFile = () => {
-    form.post('/upload'), {
-        onFinish: () => form.reset('file'),
+    form.post('/upload'), {        
+        onSuccess: () => {
+            file = null
+            form.reset();
+            form.clearErrors();
+        },
+        onError: () => (errors) => {
+            window.Toast.error(errors.create)
+        }
     }
 }
 
@@ -35,6 +43,7 @@ const uploadFile = () => {
                         ref="file"
                         @input="form.file = $event.target.files[0]"
                     >
+                    <InputError v-if="form.errors" :message="form.errors.create" class="mt-2" />
                 </div>
 
                 <progress v-if="form.progress" :value="form.progress.percentage" max="100">
@@ -42,7 +51,7 @@ const uploadFile = () => {
                 </progress>
 
                 <ActionMessage :on="form.recentlySuccessful" class="mr-3">
-                    Arquivo enviado, logo os dados da dívida estão disponíveis.
+                    Arquivo enviado, logo os dados da dívida estarão disponíveis.
                 </ActionMessage>
 
                 <PrimaryButton class="mt-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
