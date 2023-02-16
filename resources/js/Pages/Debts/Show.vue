@@ -1,9 +1,16 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import moment from 'moment';
+import { reactive } from 'vue';
 
 defineProps({
     debtsResponses: Array
+});
+
+const form = reactive({
+    error: '',
+    processing: false,
 });
 
 const convertTicket = (status_ticket) => {
@@ -28,6 +35,19 @@ const converToDate = (debtDueDate) => {
     return newData;
 };
 
+const generateTickets = () => {
+    form.processing = true;
+
+    axios.post('/tickets', {
+        
+    }).then(() => {
+        form.processing = false;
+    }).catch(errors => {
+        form.processing = false;
+        window.Toast.error(errors.generate)
+    });
+};
+
 </script>
 
 <template>
@@ -39,6 +59,16 @@ const converToDate = (debtDueDate) => {
 
             <div class="mt-6 text-gray-500">
                 Dívidas que já foram importadas para o sistema.
+            </div>
+            
+            <div class="mt-5">
+                <PrimaryButton 
+                    @click="generateTickets"    
+                    :disabled="debtsResponses.length == 0"
+                    :class="{ 'opacity-25': form.processing }"
+                >
+                    Gerar boletos
+                </PrimaryButton>
             </div>
         </template>
 
