@@ -1,14 +1,18 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ActionMessage from '@/Components/ActionMessage.vue';
 
 const form = useForm({
     file: null,
 })
 
-function submit() {
-    form.post('/upload')
+const uploadFile = () => {
+    form.post('/upload'), {
+        onFinish: () => form.reset('file'),
+    }
 }
+
 </script>
 
 <template>
@@ -23,7 +27,7 @@ function submit() {
                 Aqui você irá importar seu arquivo CSV para que possamos gerar o seu boleto!
             </div>
 
-            <form @submit.prevent="submit">
+            <form @submit.prevent="uploadFile">
                 <div class="mt-10">
                     <input 
                         enctype="multipart/form-data"
@@ -36,6 +40,10 @@ function submit() {
                 <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                     {{ form.progress.percentage }}%
                 </progress>
+
+                <ActionMessage :on="form.recentlySuccessful" class="mr-3">
+                    Arquivo enviado, logo os dados da dívida estão disponíveis.
+                </ActionMessage>
 
                 <PrimaryButton class="mt-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Enviar

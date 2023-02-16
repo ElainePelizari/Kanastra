@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Debt;
 use Carbon\Carbon;
-use DateTime;
+use App\Models\Debt;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Ramsey\Uuid\Type\Decimal;
+use Illuminate\Support\Facades\Redirect;
 
 class DebtController extends Controller
 {
-    public function upload(Request $request)
+    public function show() 
+    {
+        $debtsResponses = Debt::get();
+
+        return Inertia::render('Debts/Show', [
+            'debtsResponses' => $debtsResponses
+        ]);
+    }
+
+    public function upload(Request $request) : void
     {
         $extension = '.'.$request->file->getClientOriginalExtension();
         
@@ -21,24 +30,21 @@ class DebtController extends Controller
         $file = $request->file->storeAs('imports', $typeFile);
 
         $this->create($file);
-        // return Inertia::render('ImportFile');
     }
 
-    public function create($file)
+    public function create($file) : void
     {
         $file = Storage::disk('public')->readStream($file);
-        
+        $content = [];
+    
         try {
 
             DB::beginTransaction();
-
             $header = fgetcsv($file);
-
-            dump($header);
 
             while(($line = fgetcsv($file)) !== false) {
                 $fileContent = array_combine($header, $line);
-                dump($fileContent);
+
                 $content[] = [
                     'debtId' => intval($fileContent['debtId']),
                     'name' => $fileContent['name'],
@@ -51,21 +57,13 @@ class DebtController extends Controller
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ];
-
-                dump($content);
-
-                $result = Debt::insert($content);
-                dd($result);
             }
-            
+
+            Debt::insert($content);
+            DB::commit();
             fclose($file);
 
-            DB::commit();
-
-            dd('finalizou');
-
-        } catch (\Throwable $exception) {
-            dd('caiu no catch', $exception);
+        } catch (\Throwable $ex) {
             DB::rollback();
         }
     }

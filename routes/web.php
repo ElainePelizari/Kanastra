@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\DebtController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\DebtController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +34,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/import', function () {
         return Inertia::render('ImportFile');
     })->name('import');
+
+    Route::get('/debts', [DebtController::class, 'show'])->name('show');
 
     Route::post('/upload', [DebtController::class, 'upload']);
 });
