@@ -30,8 +30,6 @@ WORKDIR /app
 
 COPY composer.json composer.lock ./
 
-#COPY ./ /app
-
 # Run server/application with params
 CMD composer install && php artisan serve \
     --host 0.0.0.0 \
