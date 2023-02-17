@@ -13,3 +13,13 @@
 
 - Caso você não tenha alterado nenhuma porta, acessando http://localhost:8091/ o projeto estará disponivel.
 
+- Para testar o disparo de e-mail e o visualizar o boleto, sugiro que utiliza o serviço do mailtrap (https://mailtrap.io/home)
+
+- Para utilizar o serviço de e-mail no arquivo .env configure seus dados de MAIL_MAILER, MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_ENCRYPTION de acordo com o mailtrap.
+
+- Tudo pronto, agora você pode testar o sistema!
+
+- A api para retorno bancario será a url que está rodando o projeto na sua maquina, acrescida de /api/return/bank
+
+- exemplo -> http://localhost:8091/api/return/bank
+

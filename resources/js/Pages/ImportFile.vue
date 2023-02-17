@@ -4,7 +4,7 @@ import Show from '@/Pages/ImportFile/Show.vue';
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout title="Import File">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Importar arquivo
