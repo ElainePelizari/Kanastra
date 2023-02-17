@@ -31,19 +31,13 @@ class DebtDomain
         return $debtsResponses;
     }
 
-    public function upload(Request $request) : bool
+    public function upload(Request $request) : void
     {
         $extension = '.'.$request->file->getClientOriginalExtension();
-
-        if ($extension !== '.csv') {
-            $response = false;
-            return $response;
-        }
         
         $typeFile = $request->file . $extension;
         $file = $request->file->storeAs('imports', $typeFile);
         $this->create($file);
-        return $response = true;
     }
 
     public function create($file) : void

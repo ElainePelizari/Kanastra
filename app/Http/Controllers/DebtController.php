@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\DebtDomain;
-use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Domains\DebtDomain;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
 class DebtController extends Controller
 {    
-    public $cedente;
     private $domain;
 
     public function __construct()
@@ -31,13 +31,19 @@ class DebtController extends Controller
 
     public function upload(Request $request) : RedirectResponse
     {
-        $response = $this->domain->upload($request);
+        if ( !Arr::get($request, 'file') ) {
+            return redirect()->back()->withErrors([
+                'create' => 'Nenhum arquivo foi inserido!',
+            ]);
+        }
 
-        if ( !$response ) {
+        if ( $request->file->getMimeType() !== 'text/csv') {
             return redirect()->back()->withErrors([
                 'create' => 'Arquivo não é do tipo csv, importação não foi realizada!',
             ]);
         }
+
+        $this->domain->upload($request);
 
         return Redirect::route('import');
     }
