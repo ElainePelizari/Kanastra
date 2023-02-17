@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domains\DebtDomain;
+use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -44,5 +45,26 @@ class DebtController extends Controller
     public function generateTickets() : void
     {
         $this->domain->generateTickets();
+    }
+
+    public function returnBank(Request $request) : JsonResponse
+    {
+        $response = $this->domain->returnBank($request);
+
+        if (!$response) {
+            return response()->json(
+                [
+                    'message' => 'Retorno falhou, tente novamente!',
+                    'data' => []
+                ], 201
+            );
+        }
+
+        return response()->json(
+            [
+                'message' => 'Retorno realizado com sucesso!',
+                'data' => $response
+            ], 200
+        );
     }
 }

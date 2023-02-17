@@ -37,7 +37,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::get('/debts', [DebtController::class, 'show'])->name('show');
 
-    Route::post('/upload', [DebtController::class, 'upload']);
+    Route::post('/upload', [DebtController::class, 'upload'])->name('upload');
 
-    Route::post('/tickets', [DebtController::class, 'generateTickets']);
+    Route::post('/tickets', [DebtController::class, 'generateTickets'])->name('tickets');
 });

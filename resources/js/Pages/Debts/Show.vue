@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import InputError from '@/Components/InputError.vue';
 import moment from 'moment';
 import { reactive } from 'vue';
 
@@ -51,7 +52,7 @@ const generateTickets = () => {
 </script>
 
 <template>
-    <AppLayout title="History">
+    <AppLayout title="List Debts">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dívidas importadas
@@ -69,6 +70,7 @@ const generateTickets = () => {
                 >
                     Gerar boletos
                 </PrimaryButton>
+                <InputError v-if="form.errors" :message="form.errors.generate" class="mt-2" />
             </div>
         </template>
 

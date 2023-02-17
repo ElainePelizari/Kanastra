@@ -114,4 +114,17 @@ class DebtDomain
             DB::rollback();
         }
     }
+
+    public function returnBank(Request $request)
+    {
+        $debt = Debt::where('debtId', $request->debtId)->first();
+
+        if (!$debt) {
+            return null;
+        }
+
+        $debt->paid = true;
+        $debt->save();
+        return $debt;
+    }
 }
