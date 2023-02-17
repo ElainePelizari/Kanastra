@@ -15,15 +15,17 @@ class TicketUser extends Mailable
     use Queueable, SerializesModels;
 
     public $pdf;
+    public $name;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($pdf)
+    public function __construct($pdf, $name)
     {
         $this->pdf = $pdf;
+        $this->name = $name;
     }
 
     /**

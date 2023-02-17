@@ -10,7 +10,6 @@ use OpenBoleto\Agente;
 use App\Mail\TicketUser;
 use OpenBoleto\Banco\Itau;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -103,7 +102,7 @@ class DebtDomain
                     'conta' => 12345   
                 ));
                 $boletoHtml = $boleto->getOutput();
-                Mail::to($debt)->send(new TicketUser($boletoHtml));
+                Mail::to($debt)->send(new TicketUser($boletoHtml, $debt->name));
                 $debt->status_ticket = true;
                 $debt->save();
 
@@ -115,7 +114,7 @@ class DebtDomain
         }
     }
 
-    public function returnBank(Request $request)
+    public function returnBank(Request $request) : Debt
     {
         $debt = Debt::where('debtId', $request->debtId)->first();
 
