@@ -19,7 +19,7 @@
 
 - Tudo pronto, agora você pode testar o sistema!
 
-# A api para retorno bancario será a url que está rodando o projeto na sua maquina, acrescida de /api/return/bank
+- A api para retorno bancario será a url que está rodando o projeto na sua maquina, acrescida de /api/return/bank
 
-# exemplo -> http://localhost:8091/api/return/bank
+- exemplo -> http://localhost:8091/api/return/bank
 
