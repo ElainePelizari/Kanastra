@@ -13,9 +13,9 @@
 
 - Caso você não tenha alterado nenhuma porta, acessando http://localhost:8091/ o projeto estará disponivel.
 
-- Para testar o disparo de e-mail e o visualizar o boleto, sugiro que utiliza o serviço do mailtrap (https://mailtrap.io/home)
+- Para testar o disparo de e-mail e o visualizar o boleto, sugiro que utilize o serviço do mailtrap (https://mailtrap.io/home)
 
-- Para utilizar o serviço de e-mail no arquivo .env configure seus dados de MAIL_MAILER, MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_ENCRYPTION de acordo com o mailtrap.
+- Para utilizar o serviço de e-mail no arquivo .env configure seus dados de MAIL_MAILER, MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_ENCRYPTION de acordo com o mailtrap (fazer uma conta la, caso não tenha).
 
 - Tudo pronto, agora você pode testar o sistema!
 

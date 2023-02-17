@@ -11,7 +11,7 @@ const form = useForm({
 const uploadFile = () => {
     form.post('/upload'), {        
         onSuccess: () => {
-            file = null
+            form.file = null
             form.reset();
             form.clearErrors();
         },

@@ -41,11 +41,8 @@ class DebtDomain
         }
         
         $typeFile = $request->file . $extension;
-
         $file = $request->file->storeAs('imports', $typeFile);
-
         $this->create($file);
-
         return $response = true;
     }
 
@@ -60,7 +57,6 @@ class DebtDomain
 
             while(($line = fgetcsv($file)) !== false) {
                 $fileContent = array_combine($header, $line);
-
                 $content[] = [
                     'debtId' => intval($fileContent['debtId']),
                     'name' => $fileContent['name'],
@@ -82,12 +78,16 @@ class DebtDomain
         }
     }
 
-    public function generateTickets() : void
+    public function generateTickets() : bool
     {
         try {
             DB::beginTransaction();
             $debts = Debt::where('status_ticket', false)->get();
             $cedente = $this->cedente;
+
+            if ( $debts->isEmpty() ) {
+                return false;
+            }
 
             $debts->each( function($debt) use($cedente) {
                 $sacado = new Agente($debt->name, $debt->cpf, 'ABC 302 Bloco N', '72000-000', 'Brasília', 'DF');
@@ -108,13 +108,13 @@ class DebtDomain
 
             });
             DB::commit();
-            
+            return true;            
         } catch (Exception $ex) {
             DB::rollback();
         }
     }
 
-    public function returnBank(Request $request) : Debt
+    public function returnBank(Request $request) : object | null
     {
         $debt = Debt::where('debtId', $request->debtId)->first();
 

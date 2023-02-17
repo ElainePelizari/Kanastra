@@ -42,9 +42,14 @@ class DebtController extends Controller
         return Redirect::route('import');
     }
 
-    public function generateTickets() : void
+    public function generateTickets() : JsonResponse | RedirectResponse
     {
-        $this->domain->generateTickets();
+        $response = $this->domain->generateTickets();
+
+        if ( !$response ) {
+            return response()->json(['message' => 'Não há novos boletos a serem gerados!'], 404);
+        }
+        return Redirect::route('show');
     }
 
     public function returnBank(Request $request) : JsonResponse
@@ -56,7 +61,7 @@ class DebtController extends Controller
                 [
                     'message' => 'Retorno falhou, tente novamente!',
                     'data' => []
-                ], 201
+                ], 404
             );
         }
 

@@ -7,34 +7,34 @@ import { reactive } from 'vue';
 
 defineProps({
     debtsResponses: Array
-});
+})
 
 const form = reactive({
-    error: '',
+    errors: '',
     processing: false,
-});
+})
 
 const convertTicket = (status_ticket) => {
     if (status_ticket === 0) {
         return status_ticket = 'Boleto não gerado'
     } else {
-        return status_ticket = 'Boleto gerado';
+        return status_ticket = 'Boleto gerado'
     }
-};
+}
 
 const convertStatusPayment = (paid) => {
     if (paid === 0) {
         return paid = 'Dívida em aberto'
     } else {
-        return paid = 'Dívida paga';
+        return paid = 'Dívida paga'
     }
-};
+}
 
 const converToDate = (debtDueDate) => {
     moment.locale('pt-br');
     var newData = moment(debtDueDate).format('DD-MM-YYYY')
-    return newData;
-};
+    return newData
+}
 
 const generateTickets = () => {
     form.processing = true;
@@ -42,12 +42,12 @@ const generateTickets = () => {
     axios.post('/tickets', {
         
     }).then(() => {
-        form.processing = false;
+        form.processing = false
     }).catch(errors => {
-        form.processing = false;
-        window.Toast.error(errors.generate)
-    });
-};
+        form.processing = false
+        form.errors = errors.response.data.message
+    })
+}
 
 </script>
 
@@ -63,15 +63,15 @@ const generateTickets = () => {
             </div>
             
             <div class="mt-5">
-                <PrimaryButton 
-                    @click="generateTickets"    
-                    :disabled="debtsResponses.length == 0"
+                <PrimaryButton
+                    @click="generateTickets"
+                    :disabled="debtsResponses.length === 0"
                     :class="{ 'opacity-25': form.processing }"
                 >
                     Gerar boletos
                 </PrimaryButton>
-                <InputError v-if="form.errors" :message="form.errors.generate" class="mt-2" />
             </div>
+            <InputError v-if="form.errors" :message="form.errors" class="mt-2" />
         </template>
 
         <div class="mt-10">
