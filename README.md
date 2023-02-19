@@ -9,6 +9,8 @@
 
 - Finalizando a instalação rode o comando php artisan migrate
 
+- Faça a conexão com a base de dados de sua escolha, precisa ser mysql, e lembre-se de colocar a mesma porta configurada no docker-compose.yaml
+
 - Execute os comandos npm install, npm run build e npm run dev (OBS: Deve ter o npm instalado na maquina)
 
 - Caso você não tenha alterado nenhuma porta, acessando http://localhost:8091/ o projeto estará disponivel.
