@@ -32,6 +32,10 @@ const submit = () => {
 <template>
     <Head title="Login" />
 
+    <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+        <Link :href="route('register')" class="mt-4 underline text-sm text-gray-600 hover:text-gray-900">Cadastre-se</Link>
+    </div>
+
     <AuthenticationCard>
         <template #logo>
             <AuthenticationCardLogo />
@@ -80,7 +84,7 @@ const submit = () => {
                 <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
                     Esqueceu sua senha?
                 </Link>
-
+                
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Entrar
                 </PrimaryButton>
